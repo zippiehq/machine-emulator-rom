@@ -25,7 +25,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV BUILD_BASE=$BASE/rom
 
 COPY . $BUILD_BASE
-RUN cd $BUILD_BASE; make fd_emulation=yes
+RUN cd $BUILD_BASE; make downloads dep; make fd_emulation=yes
 
 WORKDIR $BASE
 
