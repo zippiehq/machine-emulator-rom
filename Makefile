@@ -72,6 +72,17 @@ $(SRCDIR):
 $(SRCCLEAN) $(DEPCLEAN): %.clean:
 	$(MAKE) -C $* clean
 
+record:
+	./make-sources.sh
+	docker run -v $(PWD):/out -i zippiehq/reproducible-docker-builds:1.1 /usr/bin/record.sh /out < sources.tar
+	rm sources.tar
+	
+replay:
+	./make-sources.sh
+	docker run -v $(PWD):/out -i zippiehq/reproducible-docker-builds:1.1 /usr/bin/replay.sh /out < sources.tar
+	rm sources.tar
+	
+
 toolchain-env:
 	@docker run --hostname toolchain-env -it --rm \
 		-e USER=$$(id -u -n) \
